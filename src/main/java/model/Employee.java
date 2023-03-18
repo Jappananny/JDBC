@@ -1,14 +1,23 @@
 package model;
-
+import javax.persistence.*;
 import java.util.Objects;
-
+@Entity
+@Table(name = "employee")
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "age")
     private int age;
-    private int cityId;
+    @Column(name = "city_id")
+    private Integer cityId;
 
     public Employee(int id, String firstName, String lastName, String gender, int age, int cityId) {
         this.id = id;

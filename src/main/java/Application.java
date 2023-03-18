@@ -10,17 +10,7 @@ public class Application {
 
 
     public static void main(String[] args) throws SQLException {
-
-        // Создаем переменные с данными для подключения к базе
-        final String user = "postgres";
-        final String pass = "100592";
-        final String url = "jdbc:postgresql://localhost:6666/skypro";
-
-
-        // Создаем соединение с базой с помощью Connection
-        // Формируем запрос к базе с помощью PreparedStatement
-        try (final Connection connection = DriverManager.getConnection(url, user, pass)) {
-            EmployeeDao employeeDao = new EmployeeDaoImpl(connection);
+            EmployeeDao employeeDao = new EmployeeDaoImpl();
             // Создаем объект класса BookDAOImpl
 
             Employee krivich = new Employee(8, "Святослав", "Вернидубович", "male", 274, 2);
@@ -32,10 +22,9 @@ public class Application {
             System.out.println("-------------------------");
             employeeDao.updateAmountById(10,"Йосиф","Бродский","Male",50,1);
             System.out.println(employeeDao.readById(10));
-            employeeDao.deleteById(11);
+            employeeDao.deleteById(employeeDao.readById(10));
             System.out.println("-------------------------");
             employeeDao.readAll().forEach(System.out::println);
-        }
     }
 
 

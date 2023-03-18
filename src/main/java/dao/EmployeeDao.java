@@ -14,6 +14,6 @@ public interface EmployeeDao {
 
     void updateAmountById(int id, String first_name, String last_name, String gender, int age, int city_id);
 
-    void deleteById(int id);
+    void deleteById(Employee employee);
 }
 
