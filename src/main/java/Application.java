@@ -1,4 +1,10 @@
+import dao.EmployeeDao;
+import dao.EmployeeDaoImpl;
+import model.City;
+import model.Employee;
+
 import java.sql.*;
+import java.util.List;
 
 public class Application {
 
@@ -13,36 +19,24 @@ public class Application {
 
         // Создаем соединение с базой с помощью Connection
         // Формируем запрос к базе с помощью PreparedStatement
-        try(final Connection connection = DriverManager.getConnection(url, user, pass);
-            PreparedStatement statement = connection.prepareStatement
-                    ("SELECT * FROM employee WHERE id = (?)")) {
+        try (final Connection connection = DriverManager.getConnection(url, user, pass)) {
+            EmployeeDao employeeDao = new EmployeeDaoImpl(connection);
+            // Создаем объект класса BookDAOImpl
 
-            // Подставляем значение вместо wildcard
-            statement.setInt(1, 2);
-
-            // Делаем запрос к базе и результат кладем в ResultSet
-            final ResultSet resultSet = statement.executeQuery();
-
-            // Методом next проверяем есть ли следующий элемент в resultSet
-            // и одновременно переходим к нему, если таковой есть
-            while (resultSet.next()) {
-
-                // С помощью методов getInt и getString получаем данные из resultSet
-                String firstNameOfEmployee = "first_name: " + resultSet.getString("first_name");
-                String lastNameOfEmployee = "last_name: " + resultSet.getString("last_name");
-                String genderOfEmployee = "gender: " + resultSet.getString("gender");
-                int ageOfEmployee = resultSet.getInt(5);
-                int cityIdOfEmployee = resultSet.getInt(6);
-
-                // Выводим данные в консоль
-                System.out.println(firstNameOfEmployee);
-                System.out.println(lastNameOfEmployee);
-                System.out.println(genderOfEmployee);
-                System.out.println("age: " + ageOfEmployee);
-                System.out.println("City: " +cityIdOfEmployee);
-            }
+            Employee krivich = new Employee(8, "Святослав", "Вернидубович", "male", 274, 2);
+                        // Вызываем метод добавления объекта
+            //employeeDao.create(krivich);
+            employeeDao.readAll().forEach(System.out::println);
+            System.out.println("-------------------------");
+            employeeDao.readById(10);
+            System.out.println("-------------------------");
+            employeeDao.updateAmountById(10,"Йосиф","Бродский","Male",50,1);
+            System.out.println(employeeDao.readById(10));
+            employeeDao.deleteById(11);
+            System.out.println("-------------------------");
+            employeeDao.readAll().forEach(System.out::println);
         }
-
-
     }
+
+
 }
