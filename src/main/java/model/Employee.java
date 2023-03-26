@@ -19,13 +19,12 @@ public class Employee {
     @Column(name = "city_id")
     private Integer cityId;
 
-    public Employee(int id, String firstName, String lastName, String gender, int age, int cityId) {
+    public Employee(int id, String firstName, String lastName, String gender, int age, int i) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.age = age;
-        this.cityId = cityId;
     }
 
     public Employee() {

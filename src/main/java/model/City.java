@@ -1,14 +1,26 @@
 package model;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-
+@Entity
+@Table(name = "city")
 public class City {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "city_id")
     private int cityId;
+    @Column(name = "city_name")
     private String cityName;
+    @OneToMany(mappedBy = "cityId", cascade = CascadeType.ALL)
+    private List<Employee> employees;
 
-    public City(int cityId, String cityName) {
-        this.cityId = cityId;
+    public City(String cityName) {
         this.cityName = cityName;
+    }
+
+    public City() {
+
     }
 
     public int getCityId() {
