@@ -20,13 +20,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
     @Override
     public Employee readById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Employee.class, id);
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.get(Employee.class, id);
+        }
     }
     @Override
     public List<Employee> readAll() {
-        List<Employee> users = HibernateSessionFactoryUtil
-                .getSessionFactory().openSession().createQuery("From Employee ", Employee.class).list();
-        return users;
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.createQuery(" FROM Employee").list();
+        }
     }
     @Override
     public void updateAmountById(Employee employee) {
